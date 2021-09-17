@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { startPostBillData } from "../action/billAction"
 import ShowAddItems from "./ShowAddItems"
 import Select from 'react-select'
-import { Modal,Button } from "react-bootstrap"
-
+import { Modal, Button } from "react-bootstrap"
 
 const BillForm = (props) => {
 
@@ -29,20 +28,17 @@ const BillForm = (props) => {
 
     const [date, setDate] = useState('')
     const [selectCustomer, setSelectCustomer] = useState('')
-    const [customer,setCustomer] = useState([])
+    const [customer, setCustomer] = useState([])
     const [selectProduct, setSelectProduct] = useState('')
-    const [product,setProduct] = useState([])
+    const [product, setProduct] = useState([])
     const [quantity, setQuantity] = useState(1)
     const [itemsInCart, setItemsInCart] = useState([])
     const [formError, setFormError] = useState('')
     const errors = {}
 
-
     const [show, setShow] = useState(false)
 
-   
     const handleShow = () => setShow(true)
-
 
     const dispatch = useDispatch()
 
@@ -74,41 +70,22 @@ const BillForm = (props) => {
     }
 
     const Validation = () => {
-        if(quantity < 0){
+        if (quantity < 0) {
             errors.quantity = 'quantity cannot be a negative number'
         }
-        if(date.length === 0){
+        if (date.length === 0) {
             errors.date = 'pick the date'
         }
-        if(selectProduct.trim().length === 0){
+        if (selectProduct.trim().length === 0) {
             errors.selectProduct = 'product cannot be empty'
         }
-        if(selectCustomer.trim().length === 0){
+        if (selectCustomer.trim().length === 0) {
             errors.selectCustomer = 'choose customer'
         }
     }
 
     const handleAdd = () => {
-        console.log(selectProduct)
-
-        // if (itemsInCart.length != 0) {
-        //     const filterItems = itemsInCart.filter((ele) => {
-        //         if (ele.product == selectProduct) {
-        //             return ele
-        //         }
-        //     })
-        // }
-
-        //     if (filterItems.length > 0) {
-        //         filterItems[0].quantity = filterItems[0].quantity + quantity
-        //         // setItemsInCart(filterItems)
-        //     } else {
-        //         itemsInCart.push({
-        //             product: selectProduct,
-        //             quantity: quantity
-        //         })
-        //     }
-        // } 
+        //console.log(selectProduct)
 
         const data = {
             product: selectProduct,
@@ -121,8 +98,7 @@ const BillForm = (props) => {
 
     }
 
-   
-    const resetForm = ()=>{
+    const resetForm = () => {
         setDate('')
         setSelectCustomer('')
         setSelectCustomer('')
@@ -137,11 +113,11 @@ const BillForm = (props) => {
             lineItems: itemsInCart
         }
         console.log('addToCArt', itemsInCart)
-        
+
         dispatch(startPostBillData(billData))
     }
 
-    const handleClose = (e) =>{
+    const handleClose = (e) => {
         e.preventDefault()
         setShow(false)
         const billData = {
@@ -151,8 +127,8 @@ const BillForm = (props) => {
         }
         console.log('addToCArt', itemsInCart)
 
-        dispatch(startPostBillData(billData,resetForm))
-    } 
+        dispatch(startPostBillData(billData, resetForm))
+    }
 
     return (
         <div>
@@ -164,51 +140,26 @@ const BillForm = (props) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <form onSubmit={handleSubmit}>
-                    <input className='form-control ' type='date' name='date' value={date} onChange={handleChange} />
-                    <br />
-
-                    {/* <select className="form-select "  value={selectCustomer} onChange={handleCustomerChange}>
-                        <option>customers</option>
-                        {
-                            customers.map((customer) => {
-                                return <option value={customer._id} name='customer' key={customer._id} name='customer'>{customer.name}</option>
-                            })
-                        }
-                    </select> */}
-                    <Select value={customer} onChange={handleCustomerChange} options={custOptions} />
-
-                    <br />
-
-                    <Select value={product} onChange={handleProductChange} options={prodOptions} />
-
-                    {/* <select className='form-select' value={selectProduct} onChange={handleProductChange}>
-                        <option value=''>Product</option>
-                        {
-                            products.map((product) => {
-                                return <option value={product._id} name='product' key={product._id}>
-                                    {product.name}
-                                </option>
-                            })
-                        }
-                    </select> */}
-                    <br />
-                    
-
-
-                    <a className='rounded-circle btn btn-success' onClick={incQuantity}>+</a>{quantity}<a className='rounded-circle btn btn-danger' onClick={decQuantity}>-</a>
-                    <a className='btn btn-info' onClick={handleAdd}>AddItems</a>
-                    <br />
-                    {/*<input type='submit' className='btn btn-primary mt-3' value='bill' />*/}
-                </form>
-                <ShowAddItems itemsInCart={itemsInCart} />
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="primary" onClick={handleClose}>
-                    bill
-                </Button>
-            </Modal.Footer>
-        </Modal>      
+                    <form onSubmit={handleSubmit}>
+                        <input className='form-control ' type='date' name='date' value={date} onChange={handleChange} />
+                        <br /> 
+                        <Select value={customer} onChange={handleCustomerChange} options={custOptions} />
+                        <br />
+                        <Select value={product} onChange={handleProductChange} options={prodOptions} />   
+                        <br />
+                        <a className='rounded-circle btn btn-success' onClick={incQuantity}>+</a>{quantity}<a className='rounded-circle btn btn-danger' onClick={decQuantity}>-</a>
+                        <a className='btn btn-info' onClick={handleAdd}>AddItems</a>
+                        <br />
+                        {/*<input type='submit' className='btn btn-primary mt-3' value='bill' />*/}
+                    </form>
+                    <ShowAddItems itemsInCart={itemsInCart} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={handleClose}>
+                        bill
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div >
     )
 

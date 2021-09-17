@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import {Modal,Button} from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 
 const ProductForm = (props) => {
     const { formSubmit } = props
@@ -13,7 +13,7 @@ const ProductForm = (props) => {
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
-      
+
     const handleChange = (e) => {
         const attr = e.target.name
         if (attr == 'name') {
@@ -31,7 +31,6 @@ const ProductForm = (props) => {
         if (price.trim().length == 0) {
             errors.price = 'price cannot be empty'
         }
-
     }
 
     const handleSubmit = (e) => {
@@ -85,7 +84,6 @@ const ProductForm = (props) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
         </div>
     )
 }

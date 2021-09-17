@@ -14,7 +14,6 @@ const DashBoard = (props) => {
         return state.bill
     })
     
-
     return (
         <div class='bd-example'>
             <div class="card text-white bg-success mb-3  " style={{maxWidth: '18rem'}}>

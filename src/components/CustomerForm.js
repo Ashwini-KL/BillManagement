@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 
 const CustomerForm = (props) => {
-    console.log('form', props)
+    //console.log('form', props)
 
     const { formSubmit } = props
     const [name, setName] = useState('')
@@ -12,11 +12,8 @@ const CustomerForm = (props) => {
     const [formErrors, setFormErrors] = useState({})
     const errors = {}
 
-
-
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
-
 
     const handleChange = (e) => {
         const attr = e.target.name
@@ -54,7 +51,7 @@ const CustomerForm = (props) => {
                 mobile: phone,
                 email: email
             }
-            console.log('cus', customerData)
+            //console.log('cus', customerData)
 
             const resetForm = () => {
                 setName('')
@@ -80,17 +77,17 @@ const CustomerForm = (props) => {
                     <form onSubmit={handleSubmit}>
                         <input type='text' className='form-control text-center' name='name' value={name} placeholder='name' onChange={handleChange} />
                         {
-                            formErrors.name && <span  className='text-danger'>{formErrors.name}</span>
+                            formErrors.name && <span className='text-danger'>{formErrors.name}</span>
                         }
                         <br />
                         <input type='number' className='form-control text-center' name='phone' value={phone} placeholder='phoneNumber' onChange={handleChange} />
                         {
-                            formErrors.phone && <span  className='text-danger'>{formErrors.phone}</span>
+                            formErrors.phone && <span className='text-danger'>{formErrors.phone}</span>
                         }
                         <br />
                         <input type='text' className='form-control text-center' name='email' value={email} placeholder='email' onChange={handleChange} />
                         {
-                            formErrors.email && <span  className='text-danger'>{formErrors.email}</span>
+                            formErrors.email && <span className='text-danger'>{formErrors.email}</span>
                         }
                         <br />
                         <input type='submit' className='align-center' className='btn btn-primary' value='Add' />
@@ -98,7 +95,6 @@ const CustomerForm = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-
                         Close
                     </Button>
                 </Modal.Footer>

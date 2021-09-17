@@ -21,8 +21,6 @@ const ListingProducts = (props) => {
 
     const dispatch = useDispatch()
 
-
-
     const handleChange = (e) => {
 
         const attr = e.target.name
@@ -34,15 +32,12 @@ const ListingProducts = (props) => {
         }
     }
 
-   
-
     const handleEdit = (_id, name, price) => {
         handleToggle()
         setId(_id)
         setName(name);
         setPrice(price)
     }
-
 
     const handleToggle = () => {
         setToggle(!toggle)

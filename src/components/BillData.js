@@ -9,7 +9,6 @@ import html2pdf from 'html2pdf.js'
 
 const BillData = (props) => {
 
-
     const customers = useSelector((state) => {
         return state.customers
     })
@@ -46,7 +45,7 @@ const BillData = (props) => {
         return customer.length > 0 ? customer[0].name : null
 
     }
-    
+
     const generatePDF = () => {
         const content = document.getElementById('pdf')
         html2pdf(content)
@@ -73,9 +72,9 @@ const BillData = (props) => {
                                     <td>{moment(b.date).format('DD/MM/YYYY')}</td>
                                     <td>{getCustomerName(b.customer)}</td>
                                     <td>
-                                        <button className = 'btn btn-primary' onClick={() => { handleShow(b._id) }}>view</button>
+                                        <button className='btn btn-primary' onClick={() => { handleShow(b._id) }}>view</button>
                                     </td>
-                                    <td><Link to='#'><img src='delete-64.ico' width='30px' height='32px'onClick={() => { handleDelete(b._id) }}/></Link></td>
+                                    <td><Link to='#'><img src='delete-64.ico' width='30px' height='32px' onClick={() => { handleDelete(b._id) }} /></Link></td>
                                 </tr>
                             })}
                         </tbody>
@@ -83,15 +82,14 @@ const BillData = (props) => {
                     {Object.keys(singleBillData).length > 0 && <Modal show={show}>
                         <Modal.Header>
                             <Modal.Title>
-                                Bill 
+                                Bill
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                        <ProductDetails bills={singleBillData} handleClose={handleClose} />
+                            <ProductDetails bills={singleBillData} handleClose={handleClose} />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
-                            
                                 Close
                             </Button>
                             <Button variant="primary" onClick={() => { generatePDF() }}>

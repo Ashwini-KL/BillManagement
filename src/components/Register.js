@@ -1,4 +1,3 @@
-
 import { useState } from "react"
 import { useDispatch } from 'react-redux'
 import { startRegisterData } from '../action/usersAction'
@@ -34,11 +33,9 @@ const Register = (props) => {
         else if (attr == 'address') {
             setAddress(e.target.value)
         }
-
     }
 
     const validation = () => {
-
         if (userName.trim().length == 0) {
             errors.userName = 'name cannot be empty'
         }
@@ -84,7 +81,6 @@ const Register = (props) => {
         }
     }
 
-
     return (
 
         <div className="p-2 mb-2 bg-light text-dark ">
@@ -122,7 +118,6 @@ const Register = (props) => {
                 </form>
             </center>
         </div>
-
     )
 }
 export default Register
