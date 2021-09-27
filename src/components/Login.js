@@ -47,8 +47,9 @@ const Login = (props) => {
                 password: password
             }
             console.log(loginData)
+
             const redirect = () => {
-                props.history.push('/')
+                props.history.push('/DashBoard')
                 //handleAuth()
             }
             dispatch(startLoginData(loginData, handleAuth, redirect))

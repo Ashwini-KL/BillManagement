@@ -51,8 +51,6 @@ const CustomerForm = (props) => {
                 mobile: phone,
                 email: email
             }
-            //console.log('cus', customerData)
-
             const resetForm = () => {
                 setName('')
                 setPhone('')
@@ -66,7 +64,7 @@ const CustomerForm = (props) => {
     }
     return (
         <div>
-            <button onClick={handleShow}>Add customer</button>
+            <button onClick={handleShow} className="mt-2 bg-secondary text-white">Add customer</button>
             <Modal show={show} style={{ textAlign: 'center' }}>
                 <Modal.Header>
                     <Modal.Title>

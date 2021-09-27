@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { startPostBillData } from "../action/billAction"
 import ShowAddItems from "./ShowAddItems"
@@ -14,12 +14,11 @@ const BillForm = (props) => {
     const products = useSelector((state) => {
         return state.products
     })
-    //console.log('c', customers)
+
     const custOptions = []
     customers.map((ele) => {
         custOptions.push({ value: ele._id, label: ele.name })
     })
-    console.log("selected", custOptions)
 
     const prodOptions = []
     products.map((ele) => {
@@ -33,12 +32,13 @@ const BillForm = (props) => {
     const [product, setProduct] = useState([])
     const [quantity, setQuantity] = useState(1)
     const [itemsInCart, setItemsInCart] = useState([])
-    const [formError, setFormError] = useState('')
+    const [formErrors, setFormErrors] = useState('')
     const errors = {}
 
     const [show, setShow] = useState(false)
 
     const handleShow = () => setShow(true)
+    const handleClose = () => setShow(false)
 
     const dispatch = useDispatch()
 
@@ -61,17 +61,13 @@ const BillForm = (props) => {
         setProduct(prodOptions)
     }
 
-    const incQuantity = () => {
-        setQuantity(quantity + 1)
-    }
-
-    const decQuantity = () => {
-        setQuantity(quantity - 1)
+    const handleQuantityChange = (e) => {
+        setQuantity(e.target.value)
     }
 
     const Validation = () => {
         if (quantity < 0) {
-            errors.quantity = 'quantity cannot be a negative number'
+            errors.quantity = 'add quantity'
         }
         if (date.length === 0) {
             errors.date = 'pick the date'
@@ -85,54 +81,50 @@ const BillForm = (props) => {
     }
 
     const handleAdd = () => {
-        //console.log(selectProduct)
-
-        const data = {
-            product: selectProduct,
-            quantity: quantity
+        Validation()
+        if (Object.keys(errors).length == 0) {
+            setFormErrors({})
+            const data = {
+                product: selectProduct,
+                quantity: quantity
+            }
+            const items = [data, ...itemsInCart]
+            setItemsInCart(items)
         }
-
-        const items = [data, ...itemsInCart]
-        setItemsInCart(items)
-        console.log('add', itemsInCart)
-
+        else {
+            setFormErrors(errors)
+        }
     }
 
-    const resetForm = () => {
-        setDate('')
-        setSelectCustomer('')
-        setSelectCustomer('')
-        setItemsInCart([])
-    }
     const handleSubmit = (e) => {
         e.preventDefault()
         Validation()
-        const billData = {
-            date: date,
-            customer: selectCustomer,
-            lineItems: itemsInCart
+        if (Object.keys(errors).length == 0) {
+            setFormErrors({})
+            const billData = {
+                date: date,
+                customer: selectCustomer,
+                lineItems: itemsInCart
+            }
+            const resetForm = () => {
+                setDate('')
+                setSelectCustomer('')
+                setSelectProduct('')
+                setCustomer([])
+                setProduct([])
+                setQuantity(1)
+                setItemsInCart([])
+            }
+            dispatch(startPostBillData(billData, resetForm))
         }
-        console.log('addToCArt', itemsInCart)
-
-        dispatch(startPostBillData(billData))
-    }
-
-    const handleClose = (e) => {
-        e.preventDefault()
-        setShow(false)
-        const billData = {
-            date: date,
-            customer: selectCustomer,
-            lineItems: itemsInCart
+        else {
+            setFormErrors(errors)
         }
-        console.log('addToCArt', itemsInCart)
-
-        dispatch(startPostBillData(billData, resetForm))
     }
 
     return (
         <div>
-            <button onClick={handleShow}>AddBill</button>
+            <button onClick={handleShow} className="mt-2 bg-secondary text-white">AddBill</button>
             <Modal show={show} style={{ textAlign: 'center' }}>
                 <Modal.Header>
                     <Modal.Title>
@@ -140,28 +132,49 @@ const BillForm = (props) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form onSubmit={handleSubmit}>
-                        <input className='form-control ' type='date' name='date' value={date} onChange={handleChange} />
-                        <br /> 
-                        <Select value={customer} onChange={handleCustomerChange} options={custOptions} />
-                        <br />
-                        <Select value={product} onChange={handleProductChange} options={prodOptions} />   
-                        <br />
-                        <a className='rounded-circle btn btn-success' onClick={incQuantity}>+</a>{quantity}<a className='rounded-circle btn btn-danger' onClick={decQuantity}>-</a>
-                        <a className='btn btn-info' onClick={handleAdd}>AddItems</a>
-                        <br />
-                        {/*<input type='submit' className='btn btn-primary mt-3' value='bill' />*/}
-                    </form>
-                    <ShowAddItems itemsInCart={itemsInCart} />
+                    <div className="row">
+                        <div className="col-md-6">
+                            <form onSubmit={handleSubmit}>
+                                <input className='form-control' type='date' name='date' value={date} onChange={handleChange} />
+                                {
+                                    formErrors.date && <span className='text-danger'>{formErrors.date}</span>
+                                }
+                                <br />
+                                <Select value={customer} onChange={handleCustomerChange} options={custOptions} />
+                                {
+                                    formErrors.selectCustomer && <span className='text-danger'>{formErrors.selectCustomer}</span>
+                                }
+                                <br />
+                                <Select value={product} onChange={handleProductChange} options={prodOptions} />
+                                {
+                                    formErrors.selectProduct && <span className='text-danger'>{formErrors.selectProduct}</span>
+                                }
+                                <br />
+                                <input className='form-control ' type='number' min='1'
+                                    name='number' value={quantity} onChange={handleQuantityChange} />
+                                {
+                                    formErrors.quantity && <span className='text-danger'>{formErrors.quantity}</span>
+                                }
+                                <br />
+                                <a className='btn btn-info mb-2 text-right' onClick={handleAdd}>AddItems</a>
+                                <br />
+                                <input type='submit' className='align-center' className='btn btn-primary' value='submit' />
+                            </form>
+                        </div>
+                        <div className="col-md-4">
+                            {itemsInCart.length > 0 &&
+                                <ShowAddItems itemsInCart={itemsInCart} />
+                            }
+                        </div>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={handleClose}>
-                        bill
+                        close
                     </Button>
                 </Modal.Footer>
             </Modal>
         </div >
     )
-
 }
 export default BillForm

@@ -14,7 +14,9 @@ export const startGetAllProducts = () => {
                 dispatch(getAllProducts(result))
             })
             .catch((err) => {
-                console.log(err.message)
+                swal({
+                    text: err.message
+                })
             })
     }
 }
@@ -39,7 +41,9 @@ export const startPostProductData = (productData, resetForm) => {
                 resetForm()
             })
             .catch((err) => {
-                console.log(err.message)
+                swal({
+                    text: err.message
+                })
             })
     }
 }
@@ -64,7 +68,9 @@ export const startDeleteProdData = (_id) => {
                 dispatch(deleteProdData(result))
             })
             .catch((err) => {
-                console.log(err.message)
+                swal({
+                    text: err.message
+                })
             })
     }
 }
@@ -89,6 +95,11 @@ export const startUpdateProdData = (data, resetForm, handleToggle, _id) => {
                 dispatch(updateProdData(result))
                 resetForm()
                 handleToggle()
+            })
+            .catch((err) => {
+                swal({
+                    text: err.message
+                })
             })
     }
 }

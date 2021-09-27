@@ -15,7 +15,6 @@ const billReducer = (state = billInitialState, action) => {
                     return ele._id != action.payload._id
                 })
             }
-
         default:
             {
                 return [...state]

@@ -5,11 +5,11 @@ const ShowAddItems = (props) => {
 
     const { itemsInCart } = props
 
+    const [cartItems, setCartItems] = useState(itemsInCart)
+
     useEffect(() => {
         setCartItems(itemsInCart)
     }, [itemsInCart])
-
-    const [cartItems, setCartItems] = useState(itemsInCart)
 
     const products = useSelector((state) => {
         return state.products
@@ -23,18 +23,15 @@ const ShowAddItems = (props) => {
     }
 
     const decreaseQuan = (product) => {
-
         let decQuantity = cartItems.map((p) => {
-            console.log('t', p.product == product)
+            //console.log('t', p.product == product)
             if (p.product == product) {
                 return { ...p, ...{ quantity: p.quantity - 1 } }
             }
             else {
                 return { ...p }
             }
-
         })
-        console.log('decQuantity', decQuantity)
         setCartItems(decQuantity)
     }
 
@@ -54,7 +51,7 @@ const ShowAddItems = (props) => {
 
     return (
         <div>
-            <table border='1'>
+            <table className='table'>
                 <thead>
                     <tr>
                         <th>Product</th>
@@ -74,8 +71,6 @@ const ShowAddItems = (props) => {
                     })}
                 </tbody>
             </table>
-
-
         </div>
     )
 }

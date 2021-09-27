@@ -20,7 +20,7 @@ const ListingCustomers = (props) => {
     const [search, setSearch] = useState('')
     const [id, setId] = useState('')
     const [toggle, setToggle] = useState(false)
-
+    
     const dispatch = useDispatch()
 
     const handleDelete = (_id) => {
@@ -77,7 +77,6 @@ const ListingCustomers = (props) => {
                 return customer
             }
         })
-        console.log(searchCustomers)
         setListingCustomers(searchCustomers)
     }
 

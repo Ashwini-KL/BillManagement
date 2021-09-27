@@ -1,13 +1,11 @@
 
 import React from 'react'
 import { useSelector } from 'react-redux'
-import moment from 'moment'
-import { Modal, Button } from "react-bootstrap"
+import { format } from 'date-fns'
 
 const ProductDetails = (props) => {
-    console.log('props',props)
-
-    const { bills} = props
+    
+    const { bills,getCustomerName} = props
 
     const products = useSelector((state) => {
         return state.products
@@ -22,13 +20,15 @@ const ProductDetails = (props) => {
 
     return (
             <div id='pdf'>
-                <p>date:{moment(bills.date).format('DD/MM/YYYY')}</p>
+                <p><b>date:</b>{format(new Date(bills.date),'dd/MM/yyy')}</p>
+                <p><b>customerName:</b>{getCustomerName(bills.customer)}</p>
             <table className='table'>
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>price</th>
                         <th>Quantity</th>
+                        <th>subTotal</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,16 +39,14 @@ const ProductDetails = (props) => {
                                 <td>{product.name}</td>
                                 <td>{item.price}</td>
                                 <td>{item.quantity}</td>
+                                <td>{item.subTotal}</td>
                             </tr>
                         }
                     })}
                 </tbody>
             </table>
-            <p className='d-flex flex-shrink-1'>Total-{bills.total}</p>
+            <p className="text-center">Total-{bills.total}</p>
             </div>
-           
-
     )
 }
-
 export default ProductDetails

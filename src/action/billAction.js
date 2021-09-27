@@ -1,52 +1,55 @@
 import axios from "axios"
+import swal from 'sweetalert'
 
-export const startGetAllBill=()=>{
-    return(dispatch)=>{
-        axios.get('http://dct-billing-app.herokuapp.com/api/bills',{
-        headers:{
-            'Authorization':`Bearer ${localStorage.getItem('token')}`
-        }
-    })
-        .then((response)=>{
-            console.log('getbill',response)
-            const result = response.data
-            dispatch(getBillData(result))        
+export const startGetAllBill = () => {
+    return (dispatch) => {
+        axios.get('http://dct-billing-app.herokuapp.com/api/bills', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
         })
-        .catch((err)=>{
-            console.log(err.message)
-        })
+            .then((response) => {
+                console.log('getbill', response)
+                const result = response.data
+                dispatch(getBillData(result))
+            })
+            .catch((err) => {
+                swal({
+                    text: err.message
+                })
+            })
     }
 }
-export const getBillData = (result)=>{
-    return{
-        type:'GET_BILLDATA',
-        payload:result
+export const getBillData = (result) => {
+    return {
+        type: 'GET_BILLDATA',
+        payload: result
     }
 }
 
-export const startPostBillData=(data,resetForm)=>{
-    return(dispatch)=>{
-        axios.post('http://dct-billing-app.herokuapp.com/api/bills',data,{
-        headers:{
-            'Authorization':`Bearer ${localStorage.getItem('token')}`
-        }
-    })
-        .then((response)=>{      
-            const result = response.data
-            console.log('postbill',result)
-            dispatch(postBillData(result)) 
-            resetForm()
-                 
+export const startPostBillData = (data, resetForm) => {
+    return (dispatch) => {
+        axios.post('http://dct-billing-app.herokuapp.com/api/bills', data, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
         })
-        .catch((err)=>{
-            console.log(err.message)
-        })
+            .then((response) => {
+                const result = response.data
+                dispatch(postBillData(result))
+                resetForm()
+            })
+            .catch((err) => {
+                swal({
+                    text: err.message
+                })
+            })
     }
 }
-export const postBillData = (result)=>{
-    return{
-        type:'SET_BILLDATA',
-        payload:result
+export const postBillData = (result) => {
+    return {
+        type: 'SET_BILLDATA',
+        payload: result
     }
 }
 
@@ -63,7 +66,9 @@ export const startDeleteBillData = (_id) => {
                 dispatch(deleteBillData(result))
             })
             .catch((err) => {
-                console.log(err.message)
+                swal({
+                    text: err.message
+                })
             })
     }
 }
@@ -75,20 +80,22 @@ export const deleteBillData = (result) => {
     }
 }
 
-export const startGetSingleBill=(_id,getSingleBillData)=>{
-    return(dispatch)=>{
-        axios.get(`http://dct-billing-app.herokuapp.com/api/bills/${_id}`,{
-        headers:{
-            'Authorization':`Bearer ${localStorage.getItem('token')}`
-        }
-    })
-        .then((response)=>{
-            console.log('getsinglebill',response)
-            const result = response.data
-            getSingleBillData(result)       
+export const startGetSingleBill = (_id, getSingleBillData) => {
+    return (dispatch) => {
+        axios.get(`http://dct-billing-app.herokuapp.com/api/bills/${_id}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
         })
-        .catch((err)=>{
-            console.log(err.message)
-        })
+            .then((response) => {
+                console.log('getsinglebill', response)
+                const result = response.data
+                getSingleBillData(result)
+            })
+            .catch((err) => {
+                swal({
+                    text: err.message
+                })
+            })
     }
 }

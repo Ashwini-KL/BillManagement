@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { startDeleteProdData,startUpdateProdData } from "../action/productAction"
+import { startDeleteProdData, startUpdateProdData } from "../action/productAction"
 import { Link } from 'react-router-dom'
 const ListingProducts = (props) => {
 
@@ -70,7 +70,6 @@ const ListingProducts = (props) => {
                 return product
             }
         })
-        console.log(searchProducts)
         setListingProducts(searchProducts)
     }
 

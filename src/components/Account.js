@@ -9,13 +9,13 @@ const Account = (props) => {
     })
 
     const dispatch = useDispatch()
-
+    
     useEffect(() => {
         dispatch(startGetAccountDetails())
     }, [])
 
     return (
-        <div>
+        <div className="mt-2 p-2 bg-secondary text-white align-items-center position-fixed" >
             <p>userName :{user.username}</p>
             <p>Email:{user.email}</p>
             <p>Password:{user.password}</p>
